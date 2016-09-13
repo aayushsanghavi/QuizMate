@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+
+<center>
+    <h2>
+    <span class="glyphicon glyphicon-list-alt"></span> Discussion Forum
+    </h2>
+</center>
+
+<h3>Previous Discussions :</h3>
+{{for comment in comments:}}
+<div class='well well-sm'>
+    {{=written_by(comment.created_by)}}&nbsp; said &nbsp;"{{=comment.your_post}}"
+    <br>{{=prettydate(comment.created_on)}}<br><br>
+</div>
+{{pass}}
+{{=form}}

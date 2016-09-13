@@ -1,0 +1,48 @@
+{{extend 'layout.html'}}
+
+<style>
+    .identification {
+        display: inline-block;
+        margin-left: 5%;
+    }
+    .score {
+        display: inline-block;
+        margin-left: 5%;
+    }
+    th{
+        background-color:gray;
+        color:white;
+    }
+</style>
+
+<h1 class="text-center">
+    <span class="glyphicon glyphicon-user"></span>
+    Top Charts
+</h1>
+
+{{i=1}}
+<center>
+<table class="table table-striped table-bordered">
+<tr>
+<th>Sr.No</th>
+<th>Username</th>
+<th>Rating</th>
+</tr>
+{{for user in users:}}
+{{if int(user.u_id)==auth.user_id:}}
+<tr style="background-color:lightgreen; color:black;">
+        <td style="margin-left:1%;">{{=i}}</td>
+        <td style="margin-left:1%;">{{=written_by(user.u_id)}}</td>
+        <td style="margin-left:73%;">{{=user.score}}</td>
+</tr>
+{{else:}}
+<tr>
+        <td style="margin-left:1%;">{{=i}}</td>
+        <td style="margin-left:1%;">{{=written_by(user.u_id)}}</td>
+        <td style="margin-left:73%;">{{=user.score}}</td>
+</tr>
+{{pass}}
+{{i=i+1}}
+{{pass}}
+</table>
+</center>

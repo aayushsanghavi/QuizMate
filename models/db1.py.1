@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+
+db.define_table('question',
+               Field('category',requires=IS_NOT_EMPTY()),
+               Field('quiz',requires=IS_NOT_EMPTY()),
+               Field('problem','text',requires=IS_NOT_EMPTY()),
+               Field('problem_number','int',requires=IS_NOT_EMPTY()),
+               Field('answer',requires=IS_NOT_EMPTY()),
+               Field('answer_string',requires=IS_NOT_EMPTY()),
+               Field('op1',requires=IS_NOT_EMPTY()),
+               Field('op2',requires=IS_NOT_EMPTY()),
+               Field('op3',requires=IS_NOT_EMPTY()),
+               Field('op4',requires=IS_NOT_EMPTY()))
+
+db.define_table('ac_hldr',
+               Field('qid'),
+               Field('marked',unique=True),
+               Field('ans'),
+               auth.signature)

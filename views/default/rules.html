@@ -1,0 +1,65 @@
+{{extend 'layout.html'}}
+
+{{extend 'layout.html'}}
+
+<style>
+    .main {
+         box-shadow: 10px;
+         border-radius: 20px;
+         font-size: 1.3em;
+         font-family:"Purisa";
+         margin-left:10%;
+         margin-right: 10%;
+         margin-top: 2%;
+         padding-bottom: 0%;
+         padding-top : 0.5%;
+         padding-left: 6%;
+         padding-right: 6%;
+         background-color: #DCDCDC;
+    }
+
+    .heading {
+         color:#808080;
+         font-size: 2.5em;
+         padding-left: auto !important;
+         padding-right: 6%;
+         text-align:center!important;
+    }
+
+    .tagline {
+        color: #900000;
+        font-size: 3em;
+        font-family:"Purisa";
+        padding-right: 10%;
+    }
+</style>
+
+<div class = "main">
+    <center>
+    <h1 class = "heading">...Rules...</h1>
+    </center>
+        <ul style="list-style:none;">
+        <li><span class="glyphicon glyphicon-hand-right"></span> Each quiz contains 10 questions.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> The questions may be of the type single/multiple correct. There is no partial marking for multiple-correct choice questions.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> The quiz can be paused and resumed as per the user's choice.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> Cheers, there's no time constraint!</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> The questions can be flagged(marked) for future reference. You can also submit a question and still flag it.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> You can connect with other users, quiz masters and many more through the discussion forum.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> Please refrain from discussing the quiz from peers in order to avoid any form of plagiarism.</li><br>
+        <li><span class="glyphicon glyphicon-hand-right"></span> Your rating will solely be dependent on your first submission for any quiz, but that doesn't mean that you can't take the quiz again for revision.</li><br>
+         <li><span class="glyphicon glyphicon-hand-right"></span> At the end of each quiz, you will be scored on your performance as follows
+            <ul>
+                <li>4 points will be awarded for every correct answer.</li>
+                <li>1 point will be deducted for every wrong answer.</li>
+                <li>No points will be awarded for unattempted questions.</li>
+            </ul>
+                </li><br>
+            <center>
+        <p class ="tagline">
+            Happy Quizzing!
+        </p>
+            </center>
+    </ul>
+</div>
+
+<a href="/quiz/default/view_categories"><h1 style="color:black; display:inline-block; float:right;"><span class="glyphicon glyphicon-arrow-right"></span></h1></a>

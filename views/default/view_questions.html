@@ -1,0 +1,262 @@
+{{extend 'layout.html'}}
+
+<style>
+    .box {
+        display:inline-block;
+        width: 40%;
+        margin-left: 6%;
+    }
+    .options{
+        width:100%;
+        font-size:18px;
+    }
+    .qno {
+       display:inline-block;
+       margin-bottom:-1%;
+       border:2px solid black;
+       border-bottom:none;
+       padding-left:7px;
+       padding-right:7px;
+       margin-top: 3%;
+    }
+    .main {
+        margin-top:1%;
+        padding-top:0px;
+        padding-bottom:1%;
+    }
+    .question{
+        border:2px sold black;
+        padding-bottom:1%;
+     }
+    .button {
+        width:100%;
+        background-color:#d9d9d9;
+        color:black;
+        font-size:1em;
+    }
+    #answer {
+        display: inline-block;
+    }
+    .your_answer{
+        display:inline-block;
+        padding:0.5%;
+        font-size: 1.4em;
+    }
+    .right {
+        display: inline-block;
+    }
+    .bt {
+        background-color:#B22222 !important;
+        color: white !important;
+    }
+    .bt:hover {
+        background-color:#FFA500 !important;
+        color: white !important;
+    }
+   body {
+           background-image: url("{{=URL('static','images/fback.jpg')}}");
+           background-repeat:no-repeat;
+           background-size:100%;
+   }
+    .main {
+        border: 2px solid white;
+        box-shadow: 15px 15px 8px;
+    }
+</style>
+<body>
+{{for post in rows:}}
+{{if post.problem_number==problem_number:}}
+{{answer=post.answer}}
+{{id=post.id}}
+{{count=0}}
+{{for entry in entries:}}
+{{if (entry.qid==id and entry.created_by==auth.user_id):}}
+{{your_answer=entry.answer}}
+{{marked=entry.marked}}
+{{count+=1}}
+{{else:}}
+{{if (count!=1):}}
+{{your_answer=""}}
+{{marked=0}}
+{{pass}}
+{{pass}}
+{{pass}}
+
+<body onload="mark()">
+<div class = "qno">
+<h4>Question {{=post.problem_number}} of 10</h4>
+</div>
+
+<div class="main well">
+<center>
+<div class="question">
+<h3>{{=post.problem_number}}. {{=post.problem}}</h3>
+</div>
+</center>
+<h4>
+    <div>
+        <div class = "box" id="left">
+            <button onclick="receive(0,'A')" id="A" class="button"><span class="left">A.</span> {{=post.op1}}</button><br><br>
+            <button onclick="receive(2,'C')" id="C" class="button"><span class="left">C.</span> {{=post.op3}}</button><br><br>
+        </div>
+        <div class = "box" id="right">
+            <button onclick="receive(1,'B')" id="B" class="button"><span class="left">B.</span> {{=post.op2}}</button><br><br>
+            <button onclick="receive(3,'D')" id="D" class="button"><span class="left">D.</span> {{=post.op4}}</button><br><br>
+        </div>
+    </div>
+</h4>
+<center>
+    <button class="btn btn-info btn-sm" onclick="submit()" data-toggle="modal" data-target="#submitModal">Submit <span class="glyphicon glyphicon-send"></span></button>
+<button class="btn btn-warning btn-sm" onclick="f()" data-toggle="modal" data-target="#flagModal">Flag <span class="glyphicon glyphicon-flag"></button>
+</center>
+<ul class="pager">
+<li class="previous">
+{{if problem_number>1:}}
+<a class="btn btn-link bt" href="{{=URL('view_questions',args=(quiz,post.problem_number-1))}}"><h5><span class="glyphicon glyphicon-chevron-left">Previous</h5></a>
+{{pass}}
+</li>
+<li class="next">
+{{if problem_number<10:}}
+<a class="bt" href="{{=URL('view_questions',args=(quiz,post.problem_number+1))}}" style="float:right;"><h5>Next<span class="glyphicon glyphicon-chevron-right"></h5></a>
+{{pass}}
+</li>
+</ul>
+<center>
+<div>
+<div class="your_answer">
+    Your answer:
+</div>
+<h4 id="answer">
+    {{=your_answer}}
+</h4>
+</div>
+</center>
+</div>
+<div style="margin-top: 4%">
+ <a class="btn btn-primary btn-sm" href="{{=URL('discussion_forum',args=post.id)}}" style="margin-right:1%; margin-left:1%;"><span class="glyphicon glyphicon-comment"> Discussion Forum</span></a>
+<button class="btn btn-success btn btn-sm" style="margin-right:1%; margin-left:1%;" onclick="vote(1)"><span class="glyphicon glyphicon-thumbs-up"></span> <span class="votes badge">{{=post.votes}}</span></button>
+<button class="btn btn-warning btn btn-sm" style="margin-right:1%;" onclick="vote(-1)"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+<a style="color: black;" class="btn btn-success right" href="{{=URL('check_answers',args=(quiz))}}"><h5>Submit quiz <span class="glyphicon glyphicon-floppy-save"></h5></a>
+</div>
+{{pass}}
+{{pass}}
+<div class="modal fade" role="dialog" id="submitModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Your response has been recorded <span class="glyphicon glyphicon-saved"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" role="dialog" id="flagModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>This question has been flagged <span class="glyphicon glyphicon-tag"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+       var answer=[1,10,100,1000];
+       var checked=[0,0,0,0];
+       var a = {{=marked}};
+       var id = {{=id}};
+       var ans_str = "{{=your_answer}}";
+       var identity = {{=auth.user_id}};
+       var q_num = {{=problem_number}};
+
+        function vote(direction)
+        {
+            var temp = {{=id}};
+            jQuery.ajax({method:'post',
+                         url:'{{=URL('vote_callback')}}',
+                         data:{'id':temp,'direction':direction},
+                        success:function(data){
+                            $('.votes').html(data);
+                        }
+            });
+        }
+
+       function receive(value,s)
+       {
+           var ans=value;
+           if (checked[ans]==0)
+           {
+               a+=answer[ans];
+               checked[ans]=1;
+               ans_str+=s;
+               var x = document.getElementById(s);
+               x.style.backgroundColor = "#181818";
+               x.style.color = "white";
+           }
+           else
+           {
+               a-=answer[ans];
+               checked[ans]=0;
+               ans_str = ans_str.replace(s,"");
+               var x = document.getElementById(s);
+               x.style.backgroundColor = "#d9d9d9";
+               x.style.color = "black";
+            }
+            document.getElementById("answer").innerHTML = ans_str;
+    }
+
+    function mark()
+    {
+        var i=0;
+        var a="{{=your_answer}}";
+        while(i<a.length)
+        {
+            var s = a.slice(i,i+1);
+            if(s=='A')
+                checked[0]=1;
+            else if(s=='B')
+                checked[1]=1;
+            else if(s=='C')
+                checked[2]=1;
+            else
+                checked[3]=1;
+            var x = document.getElementById(s);
+            x.style.backgroundColor = "#505050";
+            x.style.color = "white";
+            i+=1;
+        }
+    }
+
+    function submit()
+    {
+       var quiz_name = "{{=quiz}}";
+        var check = {{=answer}};
+        if (a==check)
+            check=1;
+        else
+            check=0;
+        jQuery.ajax({method:'post',url:"{{=URL('submit_answer')}}",
+                     data:{'marked':a,'qid':id,'ans':check,'created_by':identity,'answer':ans_str,'quiz_name':quiz_name,'q_num':q_num}
+                   });
+    }
+
+    function f()
+    {
+         jQuery.ajax({method:'post',url:"{{=URL('flagging')}}",
+                     data:{'flagged':1,'qid':id,'created_by':identity}
+                   });
+    }
+</script>

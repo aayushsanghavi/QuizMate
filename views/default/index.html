@@ -1,0 +1,355 @@
+{{extend 'layout.html'}}
+
+  <style>
+      body {
+      font-family: Montserrat, sans-serif;
+      font: 400 15px;
+      line-height: 1.8;
+      color: #818181;
+      height:1200px;
+  }
+  h2 {
+      font-size: 24px;
+      text-transform: uppercase;
+      color: #303030;
+      font-weight: 600;
+      margin-bottom: 30px;
+  }
+  h4 {
+      font-size: 19px;
+      line-height: 1.375em;
+      color: #303030;
+      font-weight: 400;
+  }
+  .jumbotron {
+      color: white;
+      padding: 150px 25px;
+      font-family:"Purisa";
+      background-image: url("{{=URL('static','images/quiz2.jpg')}}");
+      background-size: cover;
+      height:600px;
+      margin:-0px -50px -0px -50px;
+    }
+  .container-fluid {
+      padding:0px 20px 0px 20px;
+      margin:18px 20px 0px 20px;
+  }
+  .bg-grey {
+      background-color: #f6f6f6;
+  }
+  .logo-small {
+      color: #f4511e;
+      font-size: 50px;
+  }
+  .logo {
+      color: #f4511e;
+      font-size: 200px;
+  }
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+      width: 100%;
+      height: 300px;
+      margin-bottom: 10px;
+  }
+      .learn {
+      background-image: url("{{=URL('static','images/learn1.jpg')}}");
+      background-repeat:no-repeat;
+      background-size:76%;
+      background-position:center;
+      }
+      .practice {
+      background-image: url("{{=URL('static','images/practice2.png')}}");
+      background-repeat:no-repeat;
+      background-size:76%;
+      background-position:center;
+      }
+      .discover {
+          background-image: url("{{=URL('static','images/discover1.png')}}");
+          background-repeat:no-repeat;
+          background-size:75%;
+          background-position:center;
+      }
+      .item{
+          font-size: 19px;
+          line-height: 1.375em;
+          font-weight: 400;
+          font-style: italic;
+          margin: 70px 0;
+      }
+      .item span {
+          font-style: normal;
+      }
+      .panel {
+          border: 1px solid #f4511e; 
+          border-radius:0 !important;
+      transition: box-shadow 0.5s;
+      }
+      .panel:hover {
+          box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+      }
+      .panel-footer .btn:hover {
+          border: 1px solid #f4511e;
+          background-color: #fff !important;
+          color: #f4511e;
+      }
+      .panel-heading {
+          color: #fff !important;
+          background-color: #f4511e !important;
+          padding: 25px;
+          border-bottom: 1px solid transparent;
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          }
+      .panel-footer {
+          background-color: white !important;
+      }
+      .navbar {
+          margin-bottom: 0;
+          background-color: darkred;
+          z-index: 9999;
+          border: 0;
+          font-size: 12px !important;
+          line-height: 1.42857143 !important;
+          letter-spacing: 4px;
+          border-radius: 0;
+          font-family:"Liberation Sans";
+      }
+      .navbar li a, .navbar .navbar-brand {
+          font-size: 14px !important;
+          font-weight:bold;
+          color: white !important;
+      }
+          .navbar-nav li a:hover, .navbar-nav li.active a {
+          color: #f4511e !important;
+          background-color: #fff !important;
+      }
+      .navbar-default .navbar-toggle {
+          border-color: transparent;
+          color: #fff !important;
+      }
+      footer .glyphicon {
+          font-size: 20px;
+          margin-bottom: 20px;
+          color: #f4511e;
+      }
+       .holder{
+        margin:10px -50px 0px -50px;
+        padding:0px;
+       }
+       #about{
+       margin-top:-20px;
+        }
+      @keyframes slide {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateY(70%);
+        }
+        100% {
+          opacity: 1;
+          -webkit-transform: translateY(0%);
+        }
+      }
+      @-webkit-keyframes slide {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateY(70%);
+        } 
+        100% {
+          opacity: 1;
+          -webkit-transform: translateY(0%);
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .col-sm-4 {
+          text-align: center;
+          margin: 25px 0;
+        }
+        .btn-lg {
+            width: 100%;
+            margin-bottom: 35px;
+        }
+      }
+      @media screen and (max-width: 480px) {
+        .logo {
+            font-size: 150px;
+        }
+      }
+      .thumbnail {
+          background-color: white !important;
+      }
+      .connect {
+              background-color: #C0C0C0!important;
+              color: #2F4F4F !important;
+              padding:1% 0 1% 0;
+       }
+       .back {
+            background-color: #C0C0C0!important;
+            color:#708090 !important;
+       }
+       .entry1 {
+           margin-left: 5%;
+           display:inline-block;
+       }
+       .entry2 {
+           margin-left: 30%;
+           display:inline-block;
+       }
+       .entry3 {
+           display:inline-block;
+           margin-left: 25%;
+       }
+        .entries {
+            margin-top:0%;
+            padding-top:3%;
+            padding-bottom: 3.8%;
+            background-color: #DCDCDC !important;
+        }
+        a{
+          color:black;
+        }
+      a:hover{
+         text-decoration:none;
+         color:#818181;
+      }
+      #q{
+          color:red;
+      }
+      #m{
+          color:orange;
+      }
+      #u{
+          color:yellow;
+      }
+      #i{
+          color:blue;
+      }
+      #a{
+          color:green;
+      }
+      #t{
+          color:violet;
+      }
+      #e{
+          color:bisque;
+      }
+      img{
+          margin-left:1em;
+      }
+      img:hover{
+          height:3em;
+          width:3em;
+      }
+</style>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" id="tagline" href="#myPage"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="mynav"><a href="#getstarted">Get Started</a></li>
+        <li class="mynav"><a href="#howto">Tips</a></li>
+         <li class="mynav"><a href="#about">Contact</a></li>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" rel="nofollow">Log In</a><ul class="dropdown-menu"><li><a href="/quiz/default/user/register?_next=/quiz/default/rules" rel="nofollow"><i class="icon icon-user glyphicon glyphicon-user"></i> Sign Up</a></li><li><a href="/quiz/default/user/request_reset_password?_next=/quiz/default/rules" rel="nofollow"><i class="icon icon-lock glyphicon glyphicon-lock"></i> Lost password?</a></li><li class="divider"></li><li><a href="/quiz/default/user/login?_next=/quiz/default/rules" rel="nofollow"><i class="icon icon-off glyphicon glyphicon-off"></i>Log In</a></li></ul></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center" id="getstarted">
+    <h1><span id="q">Q</span><span id="u">u</span><span id="i">i</span>z<span id="m">M</span><span id="a">a</span><span id="t">t</span><span id="e">e</span></h1>
+    <p class="text-capitalize">Your most productive distraction!</p>
+    <a class="btn btn-success" href="/quiz/default/user/login?_next=/quiz/default/rules" style="color:black;"><h3>Get Started</h3></a>
+</div>
+
+<div id="howto" class="container-fluid text-center slideanim holder">
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <div class="thumbnail learn">
+          <p style="font-size:2em; color: black"><strong>Learn</strong></p>
+          <p style="font-size:1.4em; color: black">
+              Okay! Ready to learn new facts? Well this is the right place...QuizMate helps you by providing lots of quizzes on different categories of facts. Before attempting any quiz from a particular category try reading some material available online related to that particular category, this may prepare you for the quiz. 
+          </p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="thumbnail practice">
+          <p style="font-size:2em; color: black"><strong>Practice</strong></p>
+          <p style="font-size:1.4em; color: black"> Well! now we're at the second step. Practice hard and hard! You can attempt a quiz multiple times(make sure you use this tool in an appropriate way) and get thorough in a particular topic.</p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="thumbnail discover">
+        <p style="font-size:2em; color: black"><strong>Discover</strong></p>
+          <p style="font-size:1.4em; color: black">In this process of learning new things and practicing, you will end up discovering interesting facts.
+              You will also discover some new interests which may make the difference in the end.
+          </p>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div id="about" class="container-fluid holder">
+    <div class="connect">
+      <h3 class="text-center">Connect to us</h3>
+      <center><p>And we'll get back to you within 24 hours.</p></center>
+    </div>
+        <div class="entries">
+        <div class="entry1">
+      <p ><span class="glyphicon glyphicon-map-marker"></span> IIIT, Hyderabad</p>
+      <p ><span class="glyphicon glyphicon-phone"></span> +91 1515151515</p>
+        </div>
+        <div class="entry2">
+      <p><a href="mailto:aayush.sanghavi@students.iiit.ac.in?Subject=" target="_top"><span class="glyphicon glyphicon-envelope"></span> Aayush Sanghavi</a></p>
+      <p><a href="mailto:rishabh.arora@students.iiit.ac.in?Subject=" target="_top"><span class="glyphicon glyphicon-envelope"></span> Rishabh Arora</a></p>
+      </div>
+        <div class="entry3">
+            <a href=""><img src="{{=URL('static','images/facebook.png')}}" alt="facebook"></img></a>
+            <a href=""><img src="{{=URL('static','images/twitter.png')}}" alt="twitter"></img></a>
+            <a href=""><img src="{{=URL('static','images/gplus.png')}}" alt="gplus"></img></a>
+        </div>
+     </div>
+</div>
+<script>
+$(document).ready(function(){
+  $(".mynav a, footer a[href='#myPage']").on('click', function(event) {
+    event.preventDefault();
+    var hash = this.hash;
+    $('html, body').animate({
+      scrollTop: $(hash).offset().top
+    }, 900);
+  });
+
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+
+var d = ["You practice","You discover","You learn"];
+var i = 0;
+setInterval(myTimer,1000);
+function myTimer() {
+    document.getElementById("tagline").innerHTML = d[i];
+    i = (i+1)%3;
+}
+</script>
+</body>

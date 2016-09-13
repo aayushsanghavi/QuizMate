@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+
+<style>
+    #keyword{
+        height:2em;
+    }
+    h1{
+        color:white;
+    }
+    body{
+            background-color: black;
+            background-image: url("{{=URL('static','images/search.jpg')}}");
+            background-repeat:no-repeat;
+            background-position: 70% 80%;
+            background-size: 50%;
+     }
+    .result { 
+            color: white;
+    }
+</style>
+
+<h1>Search <span class="glyphicon glyphicon-search">uizzes</h1>
+{{=form}}
+<div class = "result">
+{{=target_div}}
+</div>

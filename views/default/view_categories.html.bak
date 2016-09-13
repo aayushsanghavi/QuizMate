@@ -1,0 +1,28 @@
+{{extend 'layout.html'}}
+
+<style>
+      .categories{
+      font-size: 30px !important;
+      color: cornsilk !important;
+  }
+   a:hover{
+      text-decoration:none;
+      color: darkkhaki !important;
+  }
+    .heading {
+       text-align: center;
+        color:navajowhite;
+    }
+    body{
+            background-image: url("{{=URL('static','images/dark3.jpg')}}");
+            background-repeat:no-repeat;
+            background-size: 100%;
+     }
+</style>
+
+<h1 class = "heading" >Quiz <span class="glyphicon glyphicon-tasks"></span> Categories</h1>
+{{for category in categories:}}
+<div class="col sm-6 column">
+    <h4><a href="{{=URL('view_quizzes',args=category)}}" class="categories"><span class="glyphicon glyphicon-circle-arrow-right"> {{=category}}</span></a></h4>
+</div>
+{{pass}}

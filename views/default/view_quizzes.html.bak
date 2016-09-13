@@ -1,0 +1,106 @@
+{{extend 'layout.html'}}
+
+<style>
+    .name {
+        display:inline-block;
+        font-size:2em;
+        margin:2% 0 2% 5%;
+    }
+    a{
+        color:black;
+    }
+    .quiz:hover a{
+        color: white;
+        text-decoration:none;
+    }
+    .quiz {
+        border-radius: 10px;
+        background-color: #DCDCDC;
+    }
+    .quiz:hover {
+        background-color: #181818;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        transition: height 1s;
+        transition: 1s;
+     }
+    .pagination {
+        display: inline-block;
+        margin-left: 20%;
+   }
+</style>
+{{for quiz in quizzes:}}
+
+{{am=[0,0,0,0,0,0,0,0,0,0,0]}}
+{{af=[0,0,0,0,0,0,0,0,0,0,0]}}
+{{count=1}}
+{{entries=db(db.ac_hldr).select()}}
+{{flags=db(db.marked_flag).select()}}
+
+{{cols = db(db.question.quiz==quiz).select()}}
+{{for entry in entries:}}
+{{for col in cols:}}
+{{if (entry.qid==col.id and entry.created_by==auth.user_id):}}
+{{am[col.problem_number]=1}}
+{{pass}}
+{{pass}}
+{{pass}}
+
+<div class = "quiz">
+<h4 class = "name"><a href="{{=URL('view_questions',args=quiz)}}">{{=quiz}}</a></h4>
+
+{{for col in cols:}}
+{{for f in flags:}}
+{{f.qid=long(f.qid)}}
+{{if (f.created_by==auth.user_id and f.qid==col.id):}}
+{{af[col.problem_number]=1}}
+{{pass}}
+{{pass}}
+{{pass}}
+
+<div class="pagination">
+{{while count <= 10:}}
+<a class="btn btn-sm btn-primary list_item" href="{{=URL('view_questions',args=(quiz,count))}}">{{=count}}</a>
+{{count += 1}}
+{{pass}}
+</div>
+</div>
+<br/>
+{{pass}}
+<center>
+<table class="table center" style="width:23%;margin-top:15%;margin-left:60%; margin-bottom:1%;">
+    <tr>
+    <th>Color</th>
+    <th class="text-center">Meaning</th>
+    </tr>
+    <tr>
+        <td class="alert alert-info" style="width:2em;"></td>
+        <td> Submitted Question</td>
+    </tr>
+    <tr>
+        <td class="alert alert-danger" style="width:2em;"></td>
+        <td> Flagged Question</td>
+    </tr>
+    <tr>
+        <td class="alert alert-warning" style="width:2em;"></td>
+        <td> Submitted and Flagged Question</td>
+    </tr>
+</table>
+</center>
+<script>
+    var list = document.getElementsByClassName('list_item');
+    {{for i in range(1,11):}}
+        if ({{=am[i]}}==1)
+            list[{{=i}}-1].className += ' btn-info';
+    {{pass}}
+
+    {{for i in range(1,11):}}
+        if ({{=af[i]}}==1 && {{=am[i]}}==0)
+            list[{{=i}}-1].className += ' btn-danger';
+    {{pass}}
+
+    {{for i in range(1,11):}}
+        if ({{=af[i]}}==1 && {{=am[i]}}==1)
+            list[{{=i}}-1].className += ' btn-warning';
+    {{pass}}
+</script>

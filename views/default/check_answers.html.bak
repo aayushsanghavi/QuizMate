@@ -1,0 +1,104 @@
+{{extend 'layout.html'}}
+<style>
+    .your {
+         display:inline-block;
+         margin-left: 5%;
+    }
+    .correct {
+         display:inline-block;
+         margin-left: 5%;
+    }
+    .bar{
+        height:4.5em;
+        font-weight:bold;
+    }
+    .alert{
+        padding:0.5em;
+        margin:0.5em;
+        display:block;
+    }
+</style>
+
+<body onload="rating()">
+
+<h3 class="text-center" style="color:#818181;">
+    Analysis of quiz on {{=request.args(0)}}
+</h3>
+
+{{incorrect = 0}}
+{{unattempted = 0}}
+{{correct = 0}}
+{{values=[0,0,0,0,0,0,0,0,0,0,0]}}
+{{right_ones=['', '', '', '', '', '', '', '', '', '', '']}}
+{{your_answers=['', '', '', '', '', '', '', '', '', '', '']}}
+
+{{for c in col:}}
+{{quiz_name = c.quiz}}
+{{rishabh=int(c.problem_number)}}
+{{right_ones[rishabh]=c.answer_string}}
+{{pass}}
+
+{{for row in rows:}}
+{{if row.created_by==auth.user_id:}}
+{{rishabh=int(row.q_num)}}
+{{your_answers[rishabh] = row.answer}}
+{{if (row.ans=="1"):}}
+{{values[rishabh]=1}}
+{{elif (row.ans=="0"):}}
+{{values[rishabh]=-1}}
+{{pass}}
+{{pass}}
+{{pass}}
+
+{{for r in range(1,11):}}
+{{if values[r]==1:}}
+<h4 class="alert alert-success">
+     Q.{{=r}} Correct answer &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+     <div class="your">Your answer = {{=your_answers[r]}}</div>
+    <div class="correct">Correct answer = {{=right_ones[r]}}</div>
+    {{correct += 1}}
+</h4>
+{{elif values[r]==-1:}}
+<h4 class="alert alert-danger">
+    Q.{{=r}} Wrong answer &nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;
+    <div class="your">Your answer = {{=your_answers[r]}}</div>
+    <div class="correct">Correct answer = {{=right_ones[r]}}</div>
+    {{incorrect += 1}}
+</h4>
+{{else:}}
+<h4 class="alert alert-info">
+    Q.{{=r}} Question not attempted &nbsp;&nbsp;<span class="glyphicon glyphicon-minus"></span>
+    <div class="correct">Correct answer = {{=right_ones[r]}}</div>
+    {{unattempted += 1}}
+</h4>
+{{pass}}
+{{pass}}
+{{score = 4*correct - incorrect}}
+
+<div class="progress bar" style="margin-top:2em;">
+  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" style="width:{{=10*correct}}%;">
+      <h5>Correct<br/> Answers<br/> {{=10*correct}}%</h5>
+  </div>
+  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" style="width:{{=10*incorrect}}%;">
+      <h5>Wrong<br/> Answers<br/> {{=10*incorrect}}%</h5>
+  </div>
+  <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:{{=10*unattempted}}%;">
+      <h5>Unattempted<br/> Questions<br/> {{=10*unattempted}}%</h5>
+  </div>
+</div>
+
+<p>
+    <h2>Your score for this quiz is <span class="label label-default">{{=score}}</span></h2>
+</p>
+
+</body>
+<script>
+    var identity={{=auth.user_id}};
+    var quiz="{{=quiz_name}}";
+    function rating()
+    {
+          jQuery.ajax({method:'post',url:"{{=URL('rating')}}",
+               data:{'score':{{=score}},'id':identity, 'quiz':quiz}
+          });
+    }
+</script>
